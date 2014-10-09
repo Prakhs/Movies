@@ -1,0 +1,19 @@
+<div ng-controller="RecentViewCtrl">
+<div ng-hide="!recent" ng-show="recent">
+    <h2>Recent Searches</h2>
+    <div>
+        <table>
+            <tr>
+                <td ng-repeat="obj in recentArray" align="center">
+                    <span>
+                        <img ng-src="{{obj.thumb}}">
+                    </span>
+                    <br/>
+                    <span>{{obj.name}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+
