@@ -1,0 +1,78 @@
+<html ng-app="MovieMaker">
+	<head>
+		<script src="angular.min.js"></script>
+		<script>
+			var movies = [];
+				movies["departed"] = "departed.json";
+				movies["forrestgump"] = "forrestgump.json";
+				movies["jaws"] = "jaws.json";
+				movies["jurassicpark"] = "jurassicpark.json";
+				movies["oceanseleven"] = "oceanseleven.json";
+				movies["titanic"] = "titanic.json";
+			angular.module("MovieMaker",[]).
+				controller("MovieController",function($scope,$http){
+					$scope.movie="";
+
+					$scope.abc = function(e){
+						
+						$scope.result = e.state;
+						$scope.$apply();
+				
+					}
+					window.onpopstate=$scope.abc;					
+					$scope.search = function() {	
+						var myurl = movies[$scope.movie];		
+						$scope.result=[];							
+						$http({url : myurl}).
+						success(function(response){
+						for(var i=0;i<response.movies.length;i++)
+							$scope.result.push(response.movies[i]);	
+						window.history.pushState($scope.result,"");
+								
+					    });
+					
+					};
+				});
+		</script>
+		<style>
+			section:first-child{
+				border-style:inset;
+				width: 40%;
+				height: 30%;
+				border-radius: 1%;
+			}
+			section:last-child{
+				border-style:inset;
+				width: 40%;
+				height: 60%;
+				border-radius: 1%;
+			}
+		</style>
+	</head>
+	<body ng-controller="MovieController">
+		<center>
+		<section>
+			<h1>Movie Database</h1>
+			<input type="text" ng-model="movie" placeholder="Enter the Movie"><br/>
+			<input type="button" value="Search" ng-click="search()">
+		</section>
+		<section>
+		<table ng-model="mytable" border='1'>
+			<tr ng-repeat="movie in result">
+				<td><img ng-src="{{movie.posters.thumbnail}}"></td>
+				<td><h3>
+					<span>{{movie.title}}</span><br/>
+					<span>Cast:<span ng-repeat="cast in movie.abridged_cast">{{cast.name}},</span></span><br/>
+					<span>Release year:{{movie.year}}</span><br/>
+					<span>Running time: {{movie.runtime}}</span><br/>
+					<span>Rating:{{movie.ratings.audience_score}}/100</span>
+				</h3></td>
+			</tr>
+		</table>
+		</section>
+		<section>
+			
+		</section>
+		</center>
+	</body>
+</html>
