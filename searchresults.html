@@ -1,0 +1,28 @@
+<section ng-controller="SearchCtrl">
+<input type="text" placeholder="Enter movie name" ng-model="movieName">
+		<input type="button" value="Search" ng-click="search()"><br/>
+		<label>Found {{results}} results</label>
+<hr/>
+
+
+	<table>
+			<tbody>
+				<tr ng-repeat="movie in resultArray">
+
+					<td>
+
+						<img ng-src="{{movie.posters.thumbnail}}" alt="thumbnail">
+					</td>
+					<td>
+						<span>{{movie.title}}</span><br/>
+						<span>Cast:<span ng-repeat="cast in movie.abridged_cast">{{cast.name}},</span></span><br/>
+						<span>Release year:{{movie.year}}</span><br/>
+						<span>Running time: {{movie.runtime}}</span><br/>
+						<span>Rating:{{movie.ratings.audience_score}}/100</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+</section>
+	
